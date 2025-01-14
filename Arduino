@@ -3,26 +3,27 @@
 
 void setup() {
   pinMode(MAGNET_PIN, INPUT_PULLUP); // Habilita resistencia pull-up interna
-  pinMode(BUZZER_PIN, OUTPUT); 
-  Serial.begin(9600); 
-  digitalWrite(BUZZER_PIN, LOW); 
+  pinMode(BUZZER_PIN, OUTPUT); // Configura BUZZER_PIN como salida
+  Serial.begin(9600); // Inicia la comunicación serial
+  digitalWrite(BUZZER_PIN, LOW); // Asegura que el buzzer comience apagado
 }
 
 void loop() {
-  static unsigned long lastReadTime = 0; 
+  static unsigned long lastReadTime = 0; // Guarda el tiempo de la última lectura
 
-  if (millis() - lastReadTime >= 500) { 
+  if (millis() - lastReadTime >= 500) { // Lee cada 0.5 segundos
     lastReadTime = millis();
-    int magnetState = digitalRead(MAGNET_PIN); 
+    int magnetState = digitalRead(MAGNET_PIN); // Lee el estado del sensor
     Serial.print("Magnet state: "); 
-    Serial.println(magnetState); 
+    Serial.println(magnetState); // Imprime el estado en el monitor serial
 
-    // Activa el buzzer cuando el pin 11 está flotante (sin señal)
-    if (magnetState == HIGH) { // Flotante (desconexión)
-      digitalWrite(BUZZER_PIN, HIGH); 
-      Serial.println("TRIGGER"); 
-    } else { // Imán unido (GND, LOW)
-      digitalWrite(BUZZER_PIN, LOW); 
+    if (magnetState == HIGH) { // Si el pin 11 está en HIGH (5V)
+      digitalWrite(BUZZER_PIN, LOW); // Mantén el buzzer apagado
+    } else if (magnetState == LOW) { // Si el pin 11 lee LOW (0V)
+      digitalWrite(BUZZER_PIN, HIGH); // Activa el buzzer (5V)
+      Serial.println("TRIGGER"); // Envía 'TRIGGER' por el puerto serial a la Raspberry Pi
+    } else {
+      digitalWrite(BUZZER_PIN, LOW); // Apaga el buzzer por defecto
     }
   }
 }
