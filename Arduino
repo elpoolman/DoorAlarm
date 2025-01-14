@@ -1,0 +1,28 @@
+#define MAGNET_PIN 11
+#define BUZZER_PIN 13
+
+void setup() {
+  pinMode(MAGNET_PIN, INPUT_PULLUP); // Habilita resistencia pull-up interna
+  pinMode(BUZZER_PIN, OUTPUT); 
+  Serial.begin(9600); 
+  digitalWrite(BUZZER_PIN, LOW); 
+}
+
+void loop() {
+  static unsigned long lastReadTime = 0; 
+
+  if (millis() - lastReadTime >= 500) { 
+    lastReadTime = millis();
+    int magnetState = digitalRead(MAGNET_PIN); 
+    Serial.print("Magnet state: "); 
+    Serial.println(magnetState); 
+
+    // Activa el buzzer cuando el pin 11 está flotante (sin señal)
+    if (magnetState == HIGH) { // Flotante (desconexión)
+      digitalWrite(BUZZER_PIN, HIGH); 
+      Serial.println("TRIGGER"); 
+    } else { // Imán unido (GND, LOW)
+      digitalWrite(BUZZER_PIN, LOW); 
+    }
+  }
+}
