@@ -14,7 +14,7 @@ credentials = service_account.Credentials.from_service_account_file(
 service = build('drive', 'v3', credentials=credentials)
 
 
-DRIVE_FOLDER_ID = '1WqPpLPoYCcKyH8PgBnrFYJM2ryx5H68U'
+DRIVE_FOLDER_ID = 'PlaceHolder'
 
 def create_folder(name, parent_id=None):
 
