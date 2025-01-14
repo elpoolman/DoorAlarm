@@ -40,11 +40,11 @@ def send_email(photos, to_email, smtp_server, smtp_port, smtp_user, smtp_passwor
 if __name__ == "__main__":
     photos = sys.argv[1:]  
 
-    from_email = "poolswagstyle@gmail.com" 
-    to_email = "pablo.jimenez-torr@yorksj.ac.uk"  
+    from_email = "PlaceHoldder" 
+    to_email = "PlaceHolder"  
     smtp_server = "smtp.gmail.com"  
     smtp_port = 587  
     smtp_user = from_email  
-    smtp_password = "fnncxokoebycgnch"  
+    smtp_password = "PlaceHolder"  
 
     send_email(photos, to_email, smtp_server, smtp_port, smtp_user, smtp_password)
